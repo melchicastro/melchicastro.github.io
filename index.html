@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melchi Castro — Videographer</title>
+<style>
+@font-face { font-family: 'Panchang'; src: url('fonts/Panchang-Extralight.otf') format('opentype'); font-weight: 200; }
+@font-face { font-family: 'Panchang'; src: url('fonts/Panchang-Light.otf') format('opentype'); font-weight: 300; }
+@font-face { font-family: 'Panchang'; src: url('fonts/Panchang-Regular.otf') format('opentype'); font-weight: 400; }
+@font-face { font-family: 'Panchang'; src: url('fonts/Panchang-Semibold.otf') format('opentype'); font-weight: 600; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0a0a0a;--dark:#171717;--light:#F0F0F0;--muted:#888;--purple:#7354A3;--purple2:#5E4FB1;--blue:#003190;--border:rgba(240,240,240,0.08)}
+html{scroll-behavior:smooth}
+body{font-family:'Panchang','Apple Symbols',sans-serif;background:var(--black);color:var(--light);overflow-x:hidden;cursor:none}
+.cursor{position:fixed;width:8px;height:8px;background:var(--light);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background .2s}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(240,240,240,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .15s ease}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:28px 60px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,10,10,.9),transparent);transition:all .4s ease}
+nav.scrolled{padding:18px 60px;background:rgba(10,10,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--light);text-decoration:none}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{font-size:11px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--light)}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 60px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0a0a 0%,#171717 40%,#1a1025 70%,#0a0a14 100%)}
+.hero-accent{position:absolute;top:15%;right:8%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(115,84,163,.13) 0%,transparent 70%);pointer-events:none}
+.hero-accent2{position:absolute;bottom:5%;left:0;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,49,144,.1) 0%,transparent 70%);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);margin-bottom:20px;position:relative;display:flex;align-items:center;gap:16px;opacity:0;animation:fadeUp .8s ease .2s forwards}
+.hero-eyebrow::before{content:'';display:block;width:36px;height:1px;background:var(--purple)}
+.hero-title{font-size:clamp(60px,9vw,130px);font-weight:600;line-height:.92;letter-spacing:-.02em;position:relative;opacity:0;animation:fadeUp .9s ease .35s forwards}
+.hero-title .outline{color:transparent;-webkit-text-stroke:1px rgba(240,240,240,.25)}
+.hero-title .accent{color:var(--purple2)}
+.hero-sub{margin-top:44px;display:flex;align-items:flex-end;justify-content:space-between;opacity:0;animation:fadeUp .8s ease .55s forwards}
+.hero-desc{font-size:13px;font-weight:300;line-height:1.85;color:var(--muted);max-width:320px;letter-spacing:.04em}
+.hero-cta{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--light);text-decoration:none;padding:16px 36px;border:1px solid rgba(240,240,240,.18);transition:all .4s ease;position:relative;overflow:hidden}
+.hero-cta::before{content:'';position:absolute;inset:0;background:var(--purple);transform:translateX(-101%);transition:transform .4s ease}
+.hero-cta:hover::before{transform:translateX(0)}
+.hero-cta span{position:relative;z-index:1}
+.hero-cta:hover{border-color:var(--purple)}
+.showreel{padding:120px 60px;position:relative}
+.section-label{font-size:10px;font-weight:300;letter-spacing:.4em;text-transform:uppercase;color:var(--purple);margin-bottom:48px;display:flex;align-items:center;gap:14px}
+.section-label::before{content:'';display:block;width:28px;height:1px;background:var(--purple)}
+.reel-wrap{position:relative;padding-bottom:56.25%;height:0;border:1px solid var(--border);overflow:hidden;background:#111}
+.reel-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.reel-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+.play-btn{width:68px;height:68px;border:1px solid rgba(240,240,240,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.play-btn:hover{border-color:var(--purple);background:rgba(115,84,163,.12)}
+.reel-placeholder p{font-size:11px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.portfolio{padding:120px 60px}
+.portfolio-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+.section-title{font-size:clamp(36px,5vw,62px);font-weight:600;letter-spacing:-.02em;line-height:1}
+.portfolio-count{font-size:11px;font-weight:300;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
+.proj{position:relative;overflow:hidden;background:var(--dark);cursor:none}
+.proj:nth-child(1){grid-column:span 8;aspect-ratio:16/9}
+.proj:nth-child(2){grid-column:span 4;aspect-ratio:9/16;grid-row:span 2}
+.proj:nth-child(3){grid-column:span 4;aspect-ratio:16/9}
+.proj:nth-child(4){grid-column:span 4;aspect-ratio:16/9}
+.proj:nth-child(5){grid-column:span 4;aspect-ratio:16/9}
+.proj-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a1a,#0f0f1a)}
+.proj-ph span{font-size:11px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,240,240,.12)}
+.proj-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.9) 0%,transparent 55%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
+.proj:hover .proj-ov{opacity:1}
+.proj-cat{font-size:10px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--purple);margin-bottom:6px}
+.proj-name{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.about{padding:120px 60px;border-top:1px solid var(--border)}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.about-img{aspect-ratio:4/5;border:1px solid var(--border);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#171717,#1a1025)}
+.about-img span{font-size:11px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,240,240,.12)}
+.about-tag{position:absolute;bottom:24px;right:-16px;background:var(--purple);padding:11px 18px;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+.about-title{font-size:clamp(32px,4vw,50px);font-weight:600;letter-spacing:-.02em;line-height:1.1;margin-bottom:28px}
+.about-title em{color:var(--purple2);font-style:normal}
+.about-body{font-size:14px;font-weight:300;line-height:1.9;color:rgba(240,240,240,.55);letter-spacing:.04em;margin-bottom:48px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding-top:44px;border-top:1px solid var(--border)}
+.stat-n{font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.contact{padding:120px 60px;background:linear-gradient(135deg,#0a0a0a,#0d0d1a);border-top:1px solid var(--border)}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:100px}
+.contact-title{font-size:clamp(36px,5vw,68px);font-weight:600;letter-spacing:-.02em;line-height:1;margin-bottom:20px}
+.contact-title span{color:var(--purple2)}
+.contact-sub{font-size:13px;font-weight:300;line-height:1.8;color:var(--muted);letter-spacing:.04em;margin-bottom:44px}
+.contact-links{display:flex;flex-direction:column;gap:18px}
+.contact-links a{font-size:13px;font-weight:300;letter-spacing:.1em;color:var(--light);text-decoration:none;opacity:.55;transition:opacity .3s;display:flex;align-items:center;gap:12px}
+.contact-links a:hover{opacity:1}
+.contact-links a::before{content:'';display:block;width:18px;height:1px;background:var(--purple);flex-shrink:0}
+form{display:flex;flex-direction:column;gap:20px}
+.fg{display:flex;flex-direction:column;gap:7px}
+.fg label{font-size:10px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.fg input,.fg textarea,.fg select{background:rgba(240,240,240,.03);border:1px solid var(--border);color:var(--light);font-family:'Panchang',sans-serif;font-size:13px;font-weight:300;padding:13px 16px;outline:none;transition:border-color .3s;appearance:none;-webkit-appearance:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:rgba(115,84,163,.5)}
+.fg textarea{resize:vertical;min-height:110px}
+.fg select option{background:#171717}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.btn{background:transparent;border:1px solid rgba(240,240,240,.18);color:var(--light);font-family:'Panchang',sans-serif;font-size:11px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;padding:17px 38px;cursor:none;transition:all .4s;position:relative;overflow:hidden;align-self:flex-start}
+.btn::before{content:'';position:absolute;inset:0;background:var(--purple);transform:translateX(-101%);transition:transform .4s}
+.btn:hover::before{transform:translateX(0)}
+.btn span{position:relative;z-index:1}
+.btn:hover{border-color:var(--purple)}
+footer{padding:36px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+.fn{font-size:12px;font-weight:300;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.fc{font-size:11px;font-weight:300;letter-spacing:.1em;color:rgba(240,240,240,.2)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.fu{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.fu.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){
+  nav,nav.scrolled{padding:18px 24px}
+  .nav-links{display:none}
+  .hero{padding:0 24px 60px}
+  .hero-sub{flex-direction:column;align-items:flex-start;gap:28px}
+  .showreel,.portfolio,.about,.contact{padding:72px 24px}
+  .about-inner,.contact-inner{grid-template-columns:1fr;gap:52px}
+  .grid{grid-template-columns:1fr}
+  .proj:nth-child(n){grid-column:span 1;aspect-ratio:16/9;grid-row:auto}
+  .form-row{grid-template-columns:1fr}
+  footer{padding:28px 24px;flex-direction:column;gap:10px;text-align:center}
+  .about-tag{right:0}
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+<nav id="nav">
+  <a href="#" class="nav-logo">Melchi Castro</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-accent2"></div>
+  <div style="position:relative">
+    <p class="hero-eyebrow">Videographer &amp; Director</p>
+    <h1 class="hero-title">
+      <div>Melchi</div>
+      <div class="outline">Castro</div>
+      <div class="accent">Films.</div>
+    </h1>
+    <div class="hero-sub">
+      <p class="hero-desc">Crafting visual stories that move people.<br>Based in New York — working worldwide.</p>
+      <a href="#work" class="hero-cta"><span>View Work &rarr;</span></a>
+    </div>
+  </div>
+</section>
+<section class="showreel" id="showreel">
+  <p class="section-label fu">Showreel</p>
+  <div class="reel-wrap fu">
+    <!-- YouTube: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+    <!-- Vimeo:   <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID" allowfullscreen></iframe> -->
+    <div class="reel-placeholder">
+      <div class="play-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <polygon points="3,1 15,8 3,15" fill="#F0F0F0"/>
+        </svg>
+      </div>
+      <p>Your showreel goes here</p>
+    </div>
+  </div>
+</section>
+<section class="portfolio" id="work">
+  <div class="portfolio-header fu">
+    <h2 class="section-title">Selected<br>Projects</h2>
+    <span class="portfolio-count">— 05 works</span>
+  </div>
+  <div class="grid">
+    <div class="proj fu"><div class="proj-ph"><span>Project 01</span></div><div class="proj-ov"><p class="proj-cat">Commercial</p><h3 class="proj-name">Project Title Here</h3></div></div>
+    <div class="proj fu"><div class="proj-ph"><span>Project 02</span></div><div class="proj-ov"><p class="proj-cat">Documentary</p><h3 class="proj-name">Project Title Here</h3></div></div>
+    <div class="proj fu"><div class="proj-ph"><span>Project 03</span></div><div class="proj-ov"><p class="proj-cat">Music Video</p><h3 class="proj-name">Project Title Here</h3></div></div>
+    <div class="proj fu"><div class="proj-ph"><span>Project 04</span></div><div class="proj-ov"><p class="proj-cat">Short Film</p><h3 class="proj-name">Project Title Here</h3></div></div>
+    <div class="proj fu"><div class="proj-ph"><span>Project 05</span></div><div class="proj-ov"><p class="proj-cat">Corporate</p><h3 class="proj-name">Project Title Here</h3></div></div>
+  </div>
+</section>
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="fu" style="position:relative">
+      <div class="about-img"><span>Your photo here</span></div>
+      <div class="about-tag">NYC Based</div>
+    </div>
+    <div>
+      <p class="section-label fu">About</p>
+      <h2 class="about-title fu">Telling stories<br>through <em>motion</em><br>&amp; light.</h2>
+      <p class="about-body fu">I'm Melchi Castro — a videographer and visual storyteller with a passion for capturing authentic moments and crafting compelling narratives. From commercial campaigns to intimate documentaries, I bring vision, precision and heart to every project.</p>
+      <div class="stats fu">
+        <div><div class="stat-n">5+</div><div class="stat-l">Years Experience</div></div>
+        <div><div class="stat-n">80+</div><div class="stat-l">Projects Done</div></div>
+        <div><div class="stat-n">30+</div><div class="stat-l">Happy Clients</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="fu">
+      <p class="section-label">Contact</p>
+      <h2 class="contact-title">Let's make<br>something<br><span>great.</span></h2>
+      <p class="contact-sub">Have a project in mind? I'd love to hear about it.</p>
+      <div class="contact-links">
+        <a href="mailto:hello@melchicastro.com">hello@melchicastro.com</a>
+        <a href="https://instagram.com/melchicastro" target="_blank">@melchicastro</a>
+      </div>
+    </div>
+    <div class="fu">
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your name" required></div>
+          <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
+        </div>
+        <div class="fg"><label>Project Type</label>
+          <select name="project_type"><option value="" disabled selected>Select a type</option><option>Commercial</option><option>Documentary</option><option>Music Video</option><option>Short Film</option><option>Corporate</option><option>Other</option></select>
+        </div>
+        <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." required></textarea></div>
+        <button type="submit" class="btn"><span>Send Message</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+<footer>
+  <span class="fn">Melchi Castro</span>
+  <span class="fc">&copy; 2026 — All rights reserved</span>
+</footer>
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.addEventListener('mousedown',()=>cur.style.transform='translate(-50%,-50%) scale(0.5)');
+document.addEventListener('mouseup',()=>cur.style.transform='translate(-50%,-50%) scale(1)');
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>50));
+const obs=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold:.1,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
